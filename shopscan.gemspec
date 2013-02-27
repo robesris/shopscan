@@ -4,8 +4,8 @@ require File.expand_path('../lib/shopscan/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Rob Esris"]
   gem.email         = ["robesris@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{A simple demo api for scanning/totaling products}
+  gem.summary       = %q{A simple demo api for scanning/totaling products}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
