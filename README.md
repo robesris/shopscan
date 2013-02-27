@@ -11,4 +11,4 @@ cd shopscan
 bundle install  
   
 \# set LIST_LENGTH to any non-negative number to test all permutations of that length (default is 1)    
-LIST_LENGTH=5 rspec -fd  
+LIST_LENGTH=5 bundle exec rspec -fd  
