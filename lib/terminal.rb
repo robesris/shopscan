@@ -8,12 +8,14 @@ class Terminal
     @price_list.merge! item
   end
 
-  def price_list(product_name = nil)
-    if product_name
-      @price_list[product_name.to_s.upcase]
-    else
-      @price_list
-    end
+  def product(product_name = nil)
+    return self.all_products unless product_name
+
+    @price_list[product_name.to_s.upcase]
+  end
+
+  def all_products
+    @price_list
   end
 
   def items
