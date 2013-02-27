@@ -1,6 +1,11 @@
+require 'shopscan'
+
 class Terminal
-  def set_pricing(price_list)
-    @price_list = price_list
+  include ShopScan
+
+  def add_item(item)
+    @price_list ||= {}
+    @price_list.merge! item
   end
 
   def price_list(product_name = nil)
