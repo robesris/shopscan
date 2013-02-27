@@ -1,20 +1,8 @@
 module ShopScan
-  def set_pricing(price_list)
-    price_list.each_pair do |key, product|
-      self.add_item(key => product)
-    end
-  end
 
+  # storage and retrieval methods that should be implmented by the including class 
   def add_item(item)
     raise "Please implement the add_item method to add a new product given a hash of the form: { 'A' => { :price => PRICE_IN_CENTS, :bulk_qty => BULK_QTY, :bulk_price => BULK_PRICE } }"
-  end
-
-  def price_list(product_name = nil)
-    if product_name
-      self.product(product_name)
-    else
-      self.all_products
-    end
   end
 
   def product(product_name = nil)
@@ -27,5 +15,48 @@ module ShopScan
 
   def items
     raise "Please implement the items method, to return an array of scanned item names."
+  end
+
+  def scan(item)
+    raise "Please implement the scan(item) method, accepting an item name."
+  end
+
+
+  # core methods
+  def set_pricing(price_list)
+    price_list.each_pair do |key, product|
+      self.add_item(key => product)
+    end
+  end
+
+  def price_list(product_name = nil)
+    if product_name
+      self.product(product_name)
+    else
+      self.all_products
+    end
+  end
+
+  def total
+    item_counts = {}
+
+    self.items.each do |item|
+      item_counts[item] ||= 0
+      item_counts[item] += 1
+    end
+
+    total = 0
+    item_counts.each_pair do |key, item_count|
+      #raise @price_list.inspect
+      if item_info = self.price_list[key]
+        if (bulk_qty = item_info[:bulk_qty]) && bulk_price = item_info[:bulk_price]
+          total += item_count / bulk_qty * bulk_price
+          item_count %= bulk_qty
+        end
+        total += item_count * item_info[:price]
+      end
+    end
+
+    total
   end
 end
