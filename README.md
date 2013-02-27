@@ -10,5 +10,5 @@ git clone git://github.com/robesris/shopscan.git
 cd shopscan  
 bundle install  
   
-\# set LIST_LENGTH to any non-negative number to test all permutations of that length    
+\# set LIST_LENGTH to any non-negative number to test all permutations of that length (default is 1)    
 LIST_LENGTH=5 rspec -fd  
