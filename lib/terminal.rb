@@ -22,7 +22,7 @@ class Terminal
     @items ||= []
   end
 
-  def scan(item)
+  def add_item_to_cart(item)
     @items ||= []
     @items << item
   end

@@ -56,6 +56,34 @@ describe Terminal do
     end
   end
 
+  it "gracefully rejects unknown items with a warning" do
+    terminal = Terminal.new
+    terminal.set_pricing(default_prices)
+
+    terminal.scan('A')[:status].should == :success
+
+    # unknown product
+    result = terminal.scan('E')
+    result[:status].should == :failed
+    result[:message].should == "Unknown product skipped: 'E'"
+
+    # case sensitive
+    result = terminal.scan('a')
+    result[:status].should == :failed
+    result[:message].should == "Unknown product skipped: 'a'"
+
+    result = terminal.scan('B')
+    result[:status].should == :success
+    result[:message].should be_nil
+
+    result = terminal.scan('ABCD')
+    result[:status].should == :failed
+    result[:message].should == "Unknown product skipped: 'ABCD'"
+
+    terminal.items.should == [ 'A', 'B' ]
+    terminal.total.should == 1400
+  end
+
   it "correctly totals all 'carts' of length #{ENV['LIST_LENGTH'] || 1}" do
     list_length = ENV['LIST_LENGTH'] || 1
 

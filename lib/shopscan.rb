@@ -17,8 +17,8 @@ module ShopScan
     raise "Please implement the items method, to return an array of scanned item names."
   end
 
-  def scan(item)
-    raise "Please implement the scan(item) method, accepting an item name."
+  def add_item_to_cart(item)
+    raise "Please implement the add_item_to_cart(item) method, accepting an item name."
   end
 
 
@@ -34,6 +34,15 @@ module ShopScan
       self.product(product_name)
     else
       self.all_products
+    end
+  end
+
+  def scan(item)
+    if all_products[item]
+      add_item_to_cart(item)
+      { :status => :success }
+    else
+      { :status => :failed, :message => "Unknown product skipped: '#{item}'" }
     end
   end
 
